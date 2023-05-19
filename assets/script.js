@@ -67,38 +67,41 @@ function generatePassword() {
   console.log(numeric);
   console.log(specialCharacter);
 
-  var masterArray = {
-    lc: [],
-    uc: [],
-    nc: [],
-    sc: [],
-  }
+  var masterArray = []
 
   // Logic for creating master array
-
   if (lowerCase) {
-    masterArray.lc.push(lowerCaseLetters);
+    masterArray = masterArray.concat(lowerCaseLetters);
   }
 
   if (upperCase) {
-    masterArray.uc.push(upperCaseLetters);
+    masterArray = masterArray.concat(upperCaseLetters);
   }
 
   if (numeric) {
-    masterArray.nc.push(numbers);
+    masterArray = masterArray.concat(numbers);
   }
   
   if (specialCharacter) {
-    masterArray.sc.push(specialCharacters);
+    masterArray = masterArray.concat(specialCharacters);
   }
 
   console.log(masterArray);
+  
+  generatedArray = [];
 
-  //randomized element funtion
-  var index = Math.floor(Math.random() * masterArray.length);
-  var passwordText = masterArray[index];
+  //randomized character assignment
+  for (var i = 0; i < passwordlength; i++) {
+    var index = Math.floor(Math.random() * masterArray.length);
+    var passwordCharacter = masterArray[index];
+    generatedArray.push(passwordCharacter);
+  }
 
-  return generatePassword;
+  console.log(generatedArray);
+
+  password = generatedArray.join("");
+
+  return password;
 }
 
 // Write password to the #password input
@@ -107,21 +110,7 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
 }
-
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-
-/* order of operations:
-- click button to generate password
-- prompt length of password criteria (between 8 and 128)
-- prompt lowercase query
-- prompt uppercase query
-- prompt numeric query
-- prompt special character query
-- password generated to match query inputs
-- alert containing the generated password
-*/
